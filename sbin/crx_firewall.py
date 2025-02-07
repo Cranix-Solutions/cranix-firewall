@@ -77,11 +77,6 @@ def start_fw():
         log_debug(post)
         subprocess.run(post, shell=True)
 
-def stop_fw():
-    config = json.load(open(CRANIX_FW_CONFIG))
-    for pre in config.get("pre_rules", []):
-        subprocess.run(pre, shell=True)
-
 def open_fw():
     for cmd in config.get("open_rules", []):
         subprocess.run(cmd, shell=True)
@@ -93,7 +88,7 @@ def fw_status():
 if len(sys.argv) == 1 or sys.argv[1] == "start":
     start_fw()
 elif sys.argv[1] == "stop":
-    stop_fw()
+    open_fw()
 elif sys.argv[1] == "open":
     open_fw()
 elif sys.argv[1] == "status":

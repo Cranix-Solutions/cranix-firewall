@@ -23,9 +23,7 @@ The firewall will be started by executing `/usr/sbin/crx_firewall.py`. This prog
 
 **start** Starting the firewall. All rules will be set.
 
-**stop** Stops the firewall. Only the base configuration will be set. The commands in section **open_rules** will be executed. The standard setting is: only outgoing and estabilished connections and connections to device **lo** will be accepted.
-
-**open** The commands in section **open_rules** will be executed.
+**open** **stop** Stops the firewall. The commands in section **open_rules** will be executed: All rules will be removed and the default policy will be set to ACCEPT in all chains (INPUT FORWARD OUTPUT).
 
 **status** List all firewall rules including the package counts.
 
@@ -95,16 +93,18 @@ You can edit this configurtation file. After each change you have to start crani
 * The outgoing will be writte in nat_rules.external section.
 * The remote access rules you can find in port_forward_rules.external section.
 
-The rules for room access controll are dynamically and will not be written in the firewall configuration. Please note that after all start of the firewall the actual room access control rules will be removed and the default states will be set in all dynamically controllable room.
+The rules for room access controll will be set dynamically by the `crx_manage_room_access.py` command and will not be written in the firewall configuration. Please note that after all start of the firewall the actual room access control rules will be removed and the default states will be set in all dynamically controllable room.
 
 In the /usr/share/cranix/tools/firewall/ you can find some tools to modify the static firewall configuration. All programms reads the values from the standard input.
 
-**add_fw_external_rule.py del_fw_external_rule.py**
-**add_fw_open_rules.py del_fw_open_rules.py**
-**add_fw_remote_access_rule.py del_fw_remote_access_rule.py**
-**add_fw_incomming.py del_fw_incomming.py**
-**set_fw_incomming.py**
-**add_fw_pre_rules.py del_fw_pre_rules.py**
-**convert_firewalld_to_cranix.py**
-**open_rooms.py**
+```
+add_fw_external_rule.py del_fw_external_rule.py
+add_fw_open_rules.py del_fw_open_rules.py
+add_fw_remote_access_rule.py del_fw_remote_access_rule.py
+add_fw_incomming.py del_fw_incomming.py
+set_fw_incomming.py
+add_fw_pre_rules.py del_fw_pre_rules.py
+convert_firewalld_to_cranix.py
+open_rooms.py**
+```
 
