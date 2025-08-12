@@ -5,10 +5,6 @@ import sys
 import cranixconfig
 import ipaddress
 
-CRANIX_FW_CONFIG="/etc/cranix-firewall.conf"
-config = json.load(open(CRANIX_FW_CONFIG))
-interfaces = os.popen("ip -o -f inet addr show").read().strip().split('\n')
-
 def get_interface_of_ip(ip_str):
     ip = ipaddress.ip_address(ip_str)
     for interface in interfaces:
@@ -19,9 +15,7 @@ def get_interface_of_ip(ip_str):
         if ip in network:
             return iface_name
 
-main_dev = get_interface_of_ip(cranixconfig.CRANIX_SERVER)
-
-for room in json.load(os.popen('/usr/sbin/crx_api.sh GET rooms/all')):
+def open_room(room):
     try:
         device=get_interface_of_ip(room['startIP'])
         ip_range=f"{room['startIP']}/{room['netMask']}"
@@ -34,4 +28,20 @@ for room in json.load(os.popen('/usr/sbin/crx_api.sh GET rooms/all')):
             os.system(command)
     except:
         print("open_rooms error", room)
+
+def open_all_rooms():
+    for room in json.load(os.popen('/usr/sbin/crx_api.sh GET rooms/all')):
+        open_room(room)
+
+
+CRANIX_FW_CONFIG="/etc/cranix-firewall.conf"
+config = json.load(open(CRANIX_FW_CONFIG))
+interfaces = os.popen("ip -o -f inet addr show").read().strip().split('\n')
+main_dev = get_interface_of_ip(cranixconfig.CRANIX_SERVER)
+
+if len(sys.argv) == 0:
+    open_all_rooms()
+else:
+    room = json.load(os.popen(f'/usr/sbin/crx_api.sh GET rooms/{sys.argv[1]}'))
+    open_room(room)
 
