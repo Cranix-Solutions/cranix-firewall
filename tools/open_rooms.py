@@ -39,7 +39,7 @@ config = json.load(open(CRANIX_FW_CONFIG))
 interfaces = os.popen("ip -o -f inet addr show").read().strip().split('\n')
 main_dev = get_interface_of_ip(cranixconfig.CRANIX_SERVER)
 
-if len(sys.argv) == 0:
+if len(sys.argv) == 1:
     open_all_rooms()
 else:
     room = json.load(os.popen(f'/usr/sbin/crx_api.sh GET rooms/{sys.argv[1]}'))
