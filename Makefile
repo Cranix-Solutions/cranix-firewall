@@ -7,7 +7,7 @@ TOOLS           = $(DESTDIR)/usr/share/cranix/tools/firewall/
 TEMPLATES       = $(DESTDIR)/usr/share/cranix/templates/firewall/
 TOPACKAGE       = Makefile LICENSE README.md templates sbin tools bin
 HERE            = $(shell pwd)
-REPO            = /data1/OSC/home:pvarkoly:CRANIX
+REPO            = ~/OSC/home:pvarkoly:CRANIX
 PACKAGE         = cranix-firewall
 
 install:
